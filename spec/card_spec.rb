@@ -17,3 +17,15 @@ RSpec.describe 'Card.wild?' do
     expect(card.wild?).to eq(true)
   end
 end
+
+RSpec.describe 'Card.rank' do
+  it 'returns the cards rank' do
+    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:ace])
+    card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:jack])
+    card3 = Card.new(nil, Card::WILD[:joker])
+
+    expect(card1.rank).to eq([1, 14])
+    expect(card2.rank).to eq([11])
+    expect(card3.rank).to eq('*')
+  end
+end

@@ -35,6 +35,7 @@ class Card
   def initialize(suit, value)
     @suit = suit
     @value = value
+    @current_value = nil
   end
 
   def self.suits
@@ -62,6 +63,14 @@ class Card
   end
 
   def wild?
-    self.class.wild_cards.include?(value)
+    Card.wild_cards.include?(value)
+  end
+
+  def rank
+    value_idx = Card.values.index(value)
+    return [value_idx + 1, Card.values.length + 1] if value == VALUES[:ace]
+    return '*' if wild?
+
+    [value_idx + 1]
   end
 end
