@@ -27,6 +27,8 @@ class Card
     king: 'K'
   }.freeze
 
+  # TODO: Wild card should probably be a subclass
+  # TODO: Ace should probably be it's own class too
   WILD = {
     two: '2',
     joker: 'JOKER'
@@ -35,7 +37,6 @@ class Card
   def initialize(suit, value)
     @suit = suit
     @value = value
-    @current_value = nil
   end
 
   def self.suits
@@ -62,19 +63,44 @@ class Card
     all_cards
   end
 
-  def matches(card)
+  def matches?(card)
     wild? || card.wild? || value == card.value
   end
 
-  def wild?
-    Card.wild_cards.include?(value)
+  # Can the current card be played next in a run
+  def next?(prev_card)
+    return false unless same_suit?(prev_card)
+
+    if prev_card.wild?
+      ranks.any? { |rank| prev_card.ranks.include?(rank - 1) }
+    end
+
+    ranks.any? { |rank| prev_card.ranks.include?(rank - 1) }
   end
 
+  # Actual rank of card
   def rank
-    value_idx = Card.values.index(value)
-    return [value_idx + 1, Card.values.length + 1] if value == VALUES[:ace]
-    return '*' if wild?
+    value_idx = Card.values.index(current_value)
+    ranks = (1..Card.values.length + 1).to_a # TODO
+    ranks[value_idx]
+  end
 
-    [value_idx + 1]
+  # Possible ranks of card
+  def ranks
+    value_idx = Card.values.index(value)
+    ranks = (1..Card.values.length + 1).to_a
+    [ranks[value_idx]]
+  end
+
+  def same_suit?(card)
+    suit == card.suit
+  end
+
+  def current_value
+    value
+  end
+
+  def wild?
+    false
   end
 end
