@@ -62,6 +62,10 @@ class Card
     all_cards
   end
 
+  def matches(card)
+    wild? || card.wild? || value == card.value
+  end
+
   def wild?
     Card.wild_cards.include?(value)
   end
