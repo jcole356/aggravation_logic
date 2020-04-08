@@ -100,14 +100,10 @@ RSpec.describe 'Card::points' do
 end
 
 RSpec.describe 'Card::rank' do
-  it 'returns the ranks of the card' do
-    # card1 = Ace.new(Card::SUITS[:diamonds], Card::VALUES[:ace])
+  it 'returns the rank of the card' do
     card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:jack])
-    # card3 = Wild.new(nil, Card::WILD[:joker])
 
-    # expect(card1.ranks).to eq([1, Card.values.length + 1])
     expect(card2.rank).to eq(11)
-    # expect(card3.ranks).to eq((1..Card.values.length + 1).to_a)
   end
 end
 
