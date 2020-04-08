@@ -2,18 +2,18 @@
 
 # Class for building decks and card logic
 class Ace < Card
-  def initialize
+  def initialize(suit, value)
     super
     @current_value = nil
   end
 
   # TODO
-  def next?(prev_card); end
+  # def next?(prev_card); end
 
   # TODO
   def ranks; end
 
-  def current_value(value)
+  def current_value(value = nil)
     @current_value ||= value
   end
 

@@ -9,16 +9,18 @@ class Wild < Card
   end
 
   # TODO
-  def next?(prev_card); end
+  # def next?(prev_card); end
 
   # TODO
-  def ranks; end
-
-  def current_suit(value)
-    @current_suit ||= value
+  def rank
+    super(current_value)
   end
 
-  def current_value(value)
+  def current_suit(suit = nil)
+    @current_suit ||= suit
+  end
+
+  def current_value(value = nil)
     @current_value ||= value
   end
 

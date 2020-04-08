@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pry'
+
 # Class for building decks and card logic
 class Card
   attr_reader :suit, :value
@@ -68,32 +70,35 @@ class Card
   end
 
   # Can the current card be played next in a run
+  # TODO: need to check the current suit (maybe on wilds)
   def next?(prev_card)
     return false unless same_suit?(prev_card)
 
-    if prev_card.wild?
-      ranks.any? { |rank| prev_card.ranks.include?(rank - 1) }
-    end
+    rank == prev_card.rank + 1
+  end
 
-    ranks.any? { |rank| prev_card.ranks.include?(rank - 1) }
+  def points
+    rank > 7 ? 10 : 5
   end
 
   # Actual rank of card
-  def rank
+  def rank(current_value = value)
     value_idx = Card.values.index(current_value)
     ranks = (1..Card.values.length + 1).to_a # TODO
     ranks[value_idx]
   end
 
-  # Possible ranks of card
+  # Possible ranks of all cards
   def ranks
-    value_idx = Card.values.index(value)
-    ranks = (1..Card.values.length + 1).to_a
-    [ranks[value_idx]]
+    (1..Card.values.length + 1).to_a
   end
 
   def same_suit?(card)
-    suit == card.suit
+    current_suit == card.current_suit
+  end
+
+  def current_suit
+    suit
   end
 
   def current_value
