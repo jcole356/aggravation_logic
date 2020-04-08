@@ -11,6 +11,10 @@ class Wild < Card
   # TODO
   # def next?(prev_card); end
 
+  def points
+    20
+  end
+
   # TODO
   def rank
     super(current_value)

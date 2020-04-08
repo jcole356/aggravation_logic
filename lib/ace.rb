@@ -10,8 +10,12 @@ class Ace < Card
   # TODO
   # def next?(prev_card); end
 
+  def points
+    15
+  end
+
   # TODO
-  def ranks; end
+  # def ranks; end
 
   def current_value(value = nil)
     @current_value ||= value

@@ -85,14 +85,17 @@ RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
   end
 end
 
-# TODO: wild and ace
 RSpec.describe 'Card::points' do
   it 'returns the point value of the card' do
     card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
     card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:eight])
+    card3 = Wild.new(nil, Card::VALUES[:two])
+    card4 = Ace.new(Card::SUITS[:diamonds], Card::VALUES[:ace])
 
     expect(card1.points).to eq(5)
     expect(card2.points).to eq(10)
+    expect(card3.points).to eq(20)
+    expect(card4.points).to eq(15)
   end
 end
 
