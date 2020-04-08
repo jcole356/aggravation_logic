@@ -1,15 +1,22 @@
 # frozen_string_literal: true
 
+# TODO: Create a global require file
+require 'deck'
+require 'card'
+require 'ace'
+require 'wild'
 require 'hand'
 require 'hand_set'
 require 'run'
 
 RSpec.describe 'Hand.initialize' do
+  cards = Deck.new(1).shuffle
+
   it 'has the correct number of sets' do
     sets = []
     3.times { sets << HandSet.new(3) }
 
-    hand = PlayerHand.new(sets)
+    hand = PlayerHand.new(cards.take(11), sets)
     expect(hand.sets.length).to eq(3)
   end
 
@@ -17,7 +24,7 @@ RSpec.describe 'Hand.initialize' do
     runs = []
     2.times { runs << Run.new(4, true) }
 
-    hand = PlayerHand.new(runs)
+    hand = PlayerHand.new(cards.take(11), nil, runs)
     expect(hand.runs.length).to eq(2)
     expect(hand.runs.first.same_suit).to eq(true)
   end

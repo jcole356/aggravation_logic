@@ -5,11 +5,11 @@
 class PlayerHand
   attr_reader :sets, :runs
 
-  def initialize(sets = nil, runs = nil)
+  def initialize(cards, sets = nil, runs = nil)
     @sets = sets
     @runs = runs
-    # @cards = cards
-    # @down = false
-    # @piles = []
+    @cards = cards
+    @down = false
+    @piles = []
   end
 end
