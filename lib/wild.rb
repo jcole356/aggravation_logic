@@ -8,14 +8,10 @@ class Wild < Card
     @current_value = nil
   end
 
-  # TODO
-  # def next?(prev_card); end
-
   def points
     20
   end
 
-  # TODO
   def rank
     super(current_value)
   end

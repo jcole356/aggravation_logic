@@ -100,10 +100,25 @@ RSpec.describe 'Card::points' do
 end
 
 RSpec.describe 'Card::rank' do
-  it 'returns the rank of the card' do
+  it 'returns the rank of a standard card' do
     card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:jack])
 
     expect(card2.rank).to eq(11)
+  end
+
+  it 'returns the current rank of a wild card' do
+    card2 = Wild.new(nil, Card::WILD[:joker])
+    card2.current_value(Card::VALUES[:three])
+
+    expect(card2.rank).to eq(3)
+  end
+
+  # TODO: this should not work
+  it 'returns the current rank of an ace card' do
+    card2 = Ace.new(Card::SUITS[:diamonds], Card::WILD[:ace])
+    card2.current_value(Card::VALUES[:three])
+
+    expect(card2.rank).to eq(14)
   end
 end
 
