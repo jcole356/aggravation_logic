@@ -5,10 +5,30 @@ require 'ace'
 require 'wild'
 
 RSpec.describe 'Card.all_cards' do
-  it 'returns a full deck of cards' do
-    cards = Card.all_cards
+  cards = Card.all_cards
 
+  it 'returns a full deck of cards' do
     expect(cards.length).to eq(54)
+  end
+
+  it 'returns 2 jokers' do
+    expect(cards.filter do |card|
+      card.value == Card::WILD[:joker]
+    end.length).to eq(2)
+  end
+
+  it 'returns 6 wild cards' do
+    expect(cards.filter { |card| card.class == Wild }.length).to eq(6)
+  end
+
+  it 'returns 4 twos' do
+    expect(cards.filter do |card|
+      card.value == Card::WILD[:two]
+    end.length).to eq(4)
+  end
+
+  it 'returns 4 aces' do
+    expect(cards.filter { |card| card.class == Ace }.length).to eq(4)
   end
 end
 

@@ -60,16 +60,25 @@ class Card
   end
 
   # Builds the standard deck
+  # rubocop:disable Metrics/MethodLength
   def self.all_cards
     all_cards = []
     suits.each do |suit|
       values.each do |value|
-        all_cards << Card.new(suit, value)
+        all_cards << if value == Card::VALUES[:two]
+                       Wild.new(suit, value)
+                     elsif value == Card::VALUES[:ace]
+                       Ace.new(suit)
+                     else
+                       Card.new(suit, value)
+                     end
       end
     end
-    2.times { all_cards << Card.new(nil, WILD[:joker]) }
+    2.times { all_cards << Wild.new(nil, WILD[:joker]) }
     all_cards
   end
+
+  # rubocop:enable Metrics/MethodLength
 
   def matches?(card)
     wild? || card.wild? || value == card.value
