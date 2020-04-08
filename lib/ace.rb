@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# TODO: hardcode the value here
+# Special Card class for Aces
 class Ace < Card
-  def initialize(suit, value)
+  def initialize(suit, value = Card::VALUES[:ace])
     super
     @current_value = nil
   end
@@ -11,8 +11,6 @@ class Ace < Card
     15
   end
 
-  # TODO: this one is trickier
-  # Not sure how to handle the higher point case
   def rank
     super(current_value)
   end

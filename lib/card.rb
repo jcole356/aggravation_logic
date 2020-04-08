@@ -29,8 +29,10 @@ class Card
     king: 'K'
   }.freeze
 
-  # TODO: Wild card should probably be a subclass
-  # TODO: Ace should probably be it's own class too
+  SPECIAL = {
+    ace_high: 'AH'
+  }.freeze
+
   WILD = {
     two: '2',
     joker: 'JOKER'
@@ -39,6 +41,10 @@ class Card
   def initialize(suit, value)
     @suit = suit
     @value = value
+  end
+
+  def self.special
+    SPECIAL.values
   end
 
   def self.suits
@@ -70,7 +76,7 @@ class Card
   end
 
   # Can the current card be played next in a run
-  # TODO: need to check the current suit (maybe on wilds)
+  # TODO: this may belong in the Run class
   def next?(prev_card)
     return false unless same_suit?(prev_card)
 
@@ -81,16 +87,21 @@ class Card
     rank > 7 ? 10 : 5
   end
 
+  # TODO: maybe a class method
+  def possible_ranks
+    Card.values + Card.special
+  end
+
   # Actual rank of card
   def rank(current_value = value)
-    value_idx = Card.values.index(current_value)
-    ranks = (1..Card.values.length + 1).to_a # TODO
+    value_idx = possible_ranks.index(current_value)
     ranks[value_idx]
   end
 
   # Possible ranks of all cards
+  # TODO: maybe a class method
   def ranks
-    (1..Card.values.length + 1).to_a
+    (1..possible_ranks.length).to_a
   end
 
   def same_suit?(card)

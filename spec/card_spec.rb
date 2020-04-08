@@ -42,7 +42,6 @@ RSpec.describe 'Card::matches?' do
   end
 end
 
-# TODO: test an ace
 RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
   context 'when the card is the same suit' do
     it 'returns true if the card is the next in the sequence' do
@@ -90,7 +89,7 @@ RSpec.describe 'Card::points' do
     card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
     card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:eight])
     card3 = Wild.new(nil, Card::VALUES[:two])
-    card4 = Ace.new(Card::SUITS[:diamonds], Card::VALUES[:ace])
+    card4 = Ace.new(Card::SUITS[:diamonds])
 
     expect(card1.points).to eq(5)
     expect(card2.points).to eq(10)
@@ -113,18 +112,24 @@ RSpec.describe 'Card::rank' do
     expect(card2.rank).to eq(3)
   end
 
-  # TODO: this should not work
-  it 'returns the current rank of an ace card' do
-    card2 = Ace.new(Card::SUITS[:diamonds], Card::WILD[:ace])
-    card2.current_value(Card::VALUES[:three])
+  it 'returns the correct rank of an ace low' do
+    card = Ace.new(Card::SUITS[:diamonds])
+    card.current_value(Card::VALUES[:ace])
 
-    expect(card2.rank).to eq(14)
+    expect(card.rank).to eq(1)
+  end
+
+  it 'returns the correct rank of an ace high' do
+    card = Ace.new(Card::SUITS[:diamonds])
+    card.current_value(Card::SPECIAL[:ace_high])
+
+    expect(card.rank).to eq(14)
   end
 end
 
 RSpec.describe 'Card::same_suit?' do
   it 'returns true if the cards have the same suit' do
-    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:ace])
+    card1 = Ace.new(Card::SUITS[:diamonds])
     card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:jack])
 
     expect(card1.same_suit?(card2)).to eq(true)
