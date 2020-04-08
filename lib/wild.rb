@@ -1,19 +1,11 @@
 # frozen_string_literal: true
 
-# Class for building decks and card logic
+# Special Card class for Wild cards
 class Wild < Card
   def initialize(suit, value)
     super
     @current_suit = nil
     @current_value = nil
-  end
-
-  def points
-    20
-  end
-
-  def rank
-    super(current_value)
   end
 
   def current_suit(suit = nil)
@@ -22,6 +14,14 @@ class Wild < Card
 
   def current_value(value = nil)
     @current_value ||= value
+  end
+
+  def points
+    20
+  end
+
+  def rank
+    super(current_value)
   end
 
   def wild?

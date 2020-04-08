@@ -7,16 +7,16 @@ class Ace < Card
     @current_value = nil
   end
 
+  def current_value(value = nil)
+    @current_value ||= value
+  end
+
   def points
     15
   end
 
   def rank
     super(current_value)
-  end
-
-  def current_value(value = nil)
-    @current_value ||= value
   end
 
   def wild?
