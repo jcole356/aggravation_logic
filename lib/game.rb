@@ -18,10 +18,10 @@ class Game
   end
 
   def build_hand(player)
-    current_hand = HANDS[player.current_hand]
+    current_hand = Game::HANDS[player.current_hand]
     sets = build_sets(current_hand[:sets])
     runs = build_runs(current_hand[:runs])
-    Hand.new(deck.slice(0, 11), sets, runs)
+    PlayerHand.new(deck.cards.slice(0, 11), sets, runs)
   end
 
   def build_runs(runs)
@@ -29,7 +29,7 @@ class Game
 
     result = []
     runs.first.times do
-      HandSet.new(runs[1], runs[2])
+      Run.new(runs[1], runs[2])
     end
     result
   end
@@ -50,18 +50,30 @@ class Game
     end
   end
 
-  # TODO:
+  # TODO: the following
   # Turns
   # Steals
   # Discard
   # Draw
-  def play
+  # rubocop:disable Metrics/MethodLength
+  def play # rubocop:disable Metrics/AbcSize
     puts 'How many players'
+    puts ''
     num_players = gets.chomp.to_i
     num_players.times do
       puts 'Please enter your name'
+      puts ''
       name = gets.chomp
       @players << Player.new(name)
     end
+    deal
+    # This is mostly for dev
+    players.each do |player|
+      puts ''
+      puts "#{player.name}'s cards:"
+      puts ''
+      players.first.hand.render
+    end
   end
+  # rubocop:enable Metrics/MethodLength
 end

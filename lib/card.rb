@@ -77,7 +77,6 @@ class Card
     2.times { all_cards << Wild.new(nil, WILD[:joker]) }
     all_cards
   end
-
   # rubocop:enable Metrics/MethodLength
 
   def matches?(card)
@@ -111,6 +110,11 @@ class Card
   # TODO: maybe a class method
   def ranks
     (1..possible_ranks.length).to_a
+  end
+
+  # Will be replaced by client code
+  def render
+    puts "#{value}#{suit}"
   end
 
   def same_suit?(card)

@@ -9,7 +9,7 @@ class Player
     @current_hand = 0
   end
 
-  def hand(hand)
+  def hand(hand = nil)
     @hand ||= hand
   end
 end
