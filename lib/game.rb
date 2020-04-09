@@ -4,8 +4,9 @@
 class Game
   attr_reader :players, :deck
 
+  # TODO: maybe this belongs in Hand
   HANDS = [
-    { sets: [3, 3] },
+    { sets: [2, 3] },
     { runs: [2, 4, true] }
   ].freeze
 
@@ -21,7 +22,7 @@ class Game
     current_hand = Game::HANDS[player.current_hand]
     sets = build_sets(current_hand[:sets])
     runs = build_runs(current_hand[:runs])
-    PlayerHand.new(deck.cards.slice(0, 11), sets, runs)
+    PlayerHand.new(deck.cards.slice!(0, 11), sets, runs)
   end
 
   def build_runs(runs)
@@ -56,14 +57,16 @@ class Game
   # Discard
   # Draw
   # rubocop:disable Metrics/MethodLength
-  def play # rubocop:disable Metrics/AbcSize
-    puts 'How many players'
+  # rubocop:disable Metrics/AbcSize
+  def play
     puts ''
+    puts 'How many players'
     num_players = gets.chomp.to_i
+    puts ''
     num_players.times do
       puts 'Please enter your name'
-      puts ''
       name = gets.chomp
+      puts ''
       @players << Player.new(name)
     end
     deal
@@ -72,8 +75,22 @@ class Game
       puts ''
       puts "#{player.name}'s cards:"
       puts ''
-      players.first.hand.render
+      render_hand(player)
     end
   end
+
+  # TODO: clean up the repetition here
+  def render_hand(player)
+    player.hand.render
+    puts ''
+    current_hand = Game::HANDS[player.current_hand]
+    sets = current_hand[:sets]
+    runs = current_hand[:runs]
+    sets_string = sets.nil? ? sets : "#{sets[0]} sets of #{sets[1]}"
+    runs_string = runs.nil? ? runs : ", #{runs[0]} runs of #{runs[1]}"
+    same_suit = runs && runs[3] ? ' same suit' : nil
+    puts "#{sets_string}#{runs_string}#{same_suit}"
+  end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 end
