@@ -48,6 +48,8 @@ class Game
       puts ''
       render_hand(player)
     end
+    puts ''
+    players.each(&:take_turn)
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
