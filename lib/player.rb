@@ -21,7 +21,10 @@ class Player
   end
 
   def discard
-    puts 'You are going to discard'
+    idx = discard_prompt
+    card = hand.cards.delete_at(idx)
+    discard_response(card)
+    game.discard(card)
   end
 
   # TODO: test with other letters and different cases
@@ -32,10 +35,11 @@ class Player
   def draw(choice)
     return unless Player::OPTIONS.keys.include?(choice)
 
+    draw_response(choice)
     hand.cards << if choice == :d
                     game.deck.draw
                   else
-                    game.pile.shift
+                    game.pile.pop
                   end
   end
 
@@ -55,8 +59,15 @@ class Player
     end
   end
 
+  def render_hand
+    hand.render
+    PlayerHand.render(current_hand)
+  end
+
   def take_turn
-    puts "#{name}'s turn'"
+    puts "#{name}'s turn"
+    render_hand
+    game.render_pile
     choice = draw_prompt
     draw(choice)
     hand.render

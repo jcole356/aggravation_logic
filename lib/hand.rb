@@ -57,6 +57,7 @@ class PlayerHand
 
   # Will be replaced by client code
   def render
-    cards.each(&:render)
+    puts cards.map(&:display_name).join(' ')
+    puts ''
   end
 end

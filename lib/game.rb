@@ -23,11 +23,13 @@ class Game
     end
   end
 
+  def discard(card)
+    pile << card
+  end
+
   # TODO: the following
   # Turns
   # Steals
-  # Discard
-  # Draw
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def play
@@ -44,22 +46,19 @@ class Game
       @players << Player.new(name, self)
     end
     deal
-    # This is mostly for dev
-    players.each do |player|
-      puts ''
-      puts "#{player.name}'s cards:"
-      puts ''
-      render_hand(player)
+    loop do
+      players.each(&:take_turn)
     end
-    puts ''
-    players.each(&:take_turn)
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
-  def render_hand(player)
-    player.hand.render
-    puts ''
-    PlayerHand.render(player.current_hand)
+  def render_pile
+    if pile.empty?
+      puts 'No Pile'
+    else
+      puts 'Pile:'
+      pile.last.render
+    end
   end
 end

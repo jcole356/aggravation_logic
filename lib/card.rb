@@ -79,6 +79,10 @@ class Card
   end
   # rubocop:enable Metrics/MethodLength
 
+  def display_name
+    "#{value}#{suit}"
+  end
+
   def matches?(card)
     wild? || card.wild? || value == card.value
   end
@@ -114,7 +118,7 @@ class Card
 
   # Will be replaced by client code
   def render
-    puts "#{value}#{suit}"
+    puts display_name
   end
 
   def same_suit?(card)
