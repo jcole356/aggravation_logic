@@ -12,6 +12,10 @@ class Deck
     end
   end
 
+  def draw
+    cards.shift
+  end
+
   def shuffle
     @cards.shuffle!
   end

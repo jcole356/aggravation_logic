@@ -22,9 +22,10 @@ end
 RSpec.describe 'Game::deal' do
   it 'deals the player 11 cards' do
     game = Game.new
-    %w[abc].each { |n| game.players << Player.new(n) }
-    hand = game.deal
+    %w[a b c].each { |n| game.players << Player.new(n, game) }
+    game.deal
 
+    expect(game.players.length).to eq(3)
     expect(game.players.first.hand.cards.length).to eq(11)
   end
 end

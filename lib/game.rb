@@ -2,7 +2,7 @@
 
 # Class for game logic
 class Game
-  attr_reader :players, :deck
+  attr_reader :players, :deck, :pile
 
   # TODO: figure out how many players require a third deck
   # TODO: need to reshuffle the discard pile when the deck is empty
@@ -10,6 +10,7 @@ class Game
     @players = []
     @deck = Deck.new(2)
     @deck.shuffle
+    @pile = []
   end
 
   def build_hand(player)
@@ -33,12 +34,14 @@ class Game
     puts ''
     puts 'How many players'
     num_players = gets.chomp.to_i
+    # num_players = 1
     puts ''
     num_players.times do
       puts 'Please enter your name'
       name = gets.chomp
+      # name = 'J'
       puts ''
-      @players << Player.new(name)
+      @players << Player.new(name, self)
     end
     deal
     # This is mostly for dev
