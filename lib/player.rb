@@ -47,6 +47,7 @@ class Player
     @hand ||= hand
   end
 
+  # TODO: choose a set of run by index to play on
   def play
     puts 'You are going to play'
   end

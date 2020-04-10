@@ -30,18 +30,17 @@ class Game
   # TODO: the following
   # Turns
   # Steals
+  # Borrowing
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def play
     puts ''
     puts 'How many players'
     num_players = gets.chomp.to_i
-    # num_players = 1
     puts ''
     num_players.times do
       puts 'Please enter your name'
       name = gets.chomp
-      # name = 'J'
       puts ''
       @players << Player.new(name, self)
     end

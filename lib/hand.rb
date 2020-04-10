@@ -24,22 +24,24 @@ class PlayerHand
     new(deck.cards.slice!(0, 11), sets, runs)
   end
 
+  # TODO: add tests
   def self.build_runs(runs)
     return nil if runs.nil?
 
     result = []
     runs.first.times do
-      Run.new(runs[1], runs[2])
+      result << Run.new(runs[1], runs[2])
     end
     result
   end
 
+  # TODO: add tests
   def self.build_sets(sets)
     return nil if sets.nil?
 
     result = []
     sets.first.times do
-      HandSet.new(sets[1])
+      result << HandSet.new(sets[1])
     end
     result
   end
@@ -54,9 +56,17 @@ class PlayerHand
     puts "#{sets_string}#{runs_string}#{same_suit}"
   end
 
-  # Will be replaced by client code
+  # TODO: utils for rendering an array of cards
   def render
     puts cards.map(&:display_name).join(' ')
     puts ''
+    sets&.each do |set|
+      puts "Set of #{set.num_cards}"
+      puts set.cards.map(&:display_name).join(' ')
+    end
+    runs&.each do |run|
+      puts "Set of #{run.num_cards}"
+      puts run.cards.map(&:display_name).join(' ')
+    end
   end
 end
