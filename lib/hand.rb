@@ -14,7 +14,6 @@ class PlayerHand
     @runs = runs
     @cards = cards
     @down = false
-    @piles = []
   end
 
   # Factory method
