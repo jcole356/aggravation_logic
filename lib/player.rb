@@ -33,15 +33,22 @@ class Player
   # TODO: separate business logic from data fetching
   # TODO: pile class & logic, can a card be taken etc
   # TODO: draw should only offer a choice when valid
-  def draw(choice)
-    return unless Player::PILE_OPTIONS.keys.include?(choice)
+  def draw
+    choice = nil
 
-    draw_response(choice)
-    hand.cards << if choice == :d
-                    game.deck.draw
-                  else
-                    game.pile.pop
-                  end
+    until Player::PILE_OPTIONS.keys.include?(choice)
+      choice = draw_prompt
+
+      hand.cards << if choice == :d
+                      game.deck.draw
+                    elsif choice == :p
+                      game.pile.pop
+                    else
+                      invalid_selection_response
+                      next
+                    end
+      draw_response(choice)
+    end
   end
 
   def hand(hand = nil)
@@ -66,8 +73,12 @@ class Player
     end
   end
 
-  def play_or_discard(choice)
-    loop do
+  def play_or_discard
+    choice = nil
+
+    until Player::PILE_OPTIONS.keys.include?(choice)
+      choice = play_prompt
+
       if choice == :p
         play
         break
@@ -89,10 +100,8 @@ class Player
     puts "#{name}'s turn"
     render_hand
     game.render_pile
-    choice = draw_prompt
-    draw(choice)
+    draw
     hand.render
-    choice = play_prompt
-    play_or_discard(choice)
+    play_or_discard
   end
 end
