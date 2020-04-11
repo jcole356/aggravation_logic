@@ -34,6 +34,14 @@ module Prompts
       .downcase.to_sym
   end
 
+  def invalid_selection_response
+    response('Invalid Selection, please use a valid option')
+  end
+
+  def number_of_players_prompt
+    prompt('How many players?').to_i
+  end
+
   def prompt(message)
     puts ''
     puts message

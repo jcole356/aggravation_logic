@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative 'prompts'
+
 # Class for game logic
 class Game
+  include Prompts
+
   attr_reader :players, :deck, :pile
 
   # TODO: figure out how many players require a third deck
@@ -27,17 +31,25 @@ class Game
     pile << card
   end
 
+  def number_of_players
+    invalid = false
+    num_players = nil
+    until valid_number_of_players(num_players)
+      invalid_selection_response if invalid
+      num_players = number_of_players_prompt
+      invalid = true
+    end
+
+    num_players
+  end
+
   # TODO: the following
   # Turns
   # Steals
   # Borrowing
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def play
-    puts ''
-    puts 'How many players'
-    num_players = gets.chomp.to_i
-    puts ''
+    num_players = number_of_players
     num_players.times do
       puts 'Please enter your name'
       name = gets.chomp
@@ -50,7 +62,6 @@ class Game
     end
   end
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
   def render_pile
     if pile.empty?
@@ -59,5 +70,12 @@ class Game
       puts 'Pile:'
       pile.last.render
     end
+  end
+
+  # TODO: add constants for maximum number of players
+  def valid_number_of_players(num)
+    return false if num.nil?
+
+    num.positive? && num < 5
   end
 end

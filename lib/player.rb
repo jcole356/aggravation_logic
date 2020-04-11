@@ -67,10 +67,16 @@ class Player
   end
 
   def play_or_discard(choice)
-    if choice == :p
-      play
-    elsif choice == :d
-      discard
+    loop do
+      if choice == :p
+        play
+        break
+      elsif choice == :d
+        discard
+        break
+      else
+        invalid_selection_response
+      end
     end
   end
 
