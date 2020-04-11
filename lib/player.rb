@@ -20,9 +20,10 @@ class Player
     @score = 0
   end
 
+  # TODO: remove hardcoded string
   def discard
-    idx = discard_prompt
-    card = hand.cards.delete_at(idx)
+    idx = card_select_prompt('discard')
+    card = hand.select_card(idx)
     discard_response(card)
     game.discard(card)
   end
@@ -48,8 +49,21 @@ class Player
   end
 
   # TODO: choose a set of run by index to play on
+  # TODO: remove hardcoded string
   def play
-    puts 'You are going to play'
+    loop do
+      hand.render # TODO: may not want this every time
+      pile_choice = choose_pile_prompt
+      break if pile_choice == :q
+
+      piles = {}
+      piles.merge!(hand.sets) if hand.sets
+      piles.merge!(hand.runs) if hand.runs
+      pile = piles[pile_choice]
+      card_choice = card_select_prompt('play')
+      card = hand.select_card(card_choice)
+      pile.play(card)
+    end
   end
 
   def play_or_discard(choice)

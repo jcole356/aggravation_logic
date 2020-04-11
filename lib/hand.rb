@@ -28,9 +28,9 @@ class PlayerHand
   def self.build_runs(runs)
     return nil if runs.nil?
 
-    result = []
+    result = {}
     runs.first.times do
-      result << Run.new(runs[1], runs[2])
+      result["r#{idx}".to_sym] = Run.new(runs[1], runs[2])
     end
     result
   end
@@ -39,9 +39,9 @@ class PlayerHand
   def self.build_sets(sets)
     return nil if sets.nil?
 
-    result = []
-    sets.first.times do
-      result << HandSet.new(sets[1])
+    result = {}
+    sets.first.times do |idx|
+      result["s#{idx}".to_sym] = HandSet.new(sets[1])
     end
     result
   end
@@ -60,13 +60,17 @@ class PlayerHand
   def render
     puts cards.map(&:display_name).join(' ')
     puts ''
-    sets&.each do |set|
-      puts "Set of #{set.num_cards}"
+    sets&.each do |key, set|
+      puts "(#{key.to_s.upcase}) Set of #{set.num_cards}"
       puts set.cards.map(&:display_name).join(' ')
     end
-    runs&.each do |run|
-      puts "Set of #{run.num_cards}"
+    runs&.each do |key, run|
+      puts "(#{key.to_s.upcase}) Set of #{run.num_cards}"
       puts run.cards.map(&:display_name).join(' ')
     end
+  end
+
+  def select_card(idx)
+    cards.delete_at(idx)
   end
 end

@@ -8,4 +8,15 @@ class HandSet
     @num_cards = num_cards
     @cards = []
   end
+
+  def play(card)
+    raise 'Invalid Move' unless valid_move?(card)
+
+    cards << card
+  end
+
+  # TODO: check other cards
+  def valid_move?(_card)
+    return true if cards.empty?
+  end
 end
