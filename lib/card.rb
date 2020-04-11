@@ -83,8 +83,9 @@ class Card
     "#{value}#{suit}"
   end
 
+  # TODO: may not need this
   def matches?(card)
-    wild? || card.wild? || value == card.value
+    wild? || card.wild? || current_value == card.current_value
   end
 
   # Can the current card be played next in a run

@@ -54,6 +54,7 @@ class Player
 
   # TODO: choose a set of run by index to play on
   # TODO: remove hardcoded string
+  # TODO: validate pile choice
   def play
     loop do
       hand.render # TODO: may not want this every time
@@ -64,9 +65,31 @@ class Player
       piles.merge!(hand.sets) if hand.sets
       piles.merge!(hand.runs) if hand.runs
       pile = piles[pile_choice]
+
+      if pile.nil?
+        invalid_selection_response
+        next
+      end
+
+      play_card(pile)
+    end
+  end
+
+  # TODO: need a way to end
+  # TODO: game may need a card queue for invalid turns
+  # TODO; does not re-render hand
+  def play_card(pile)
+    loop do
       card_choice = card_select_prompt('play')
       card = hand.select_card(card_choice)
-      pile.play(card)
+      begin
+        pile.play(card)
+      rescue StandardError => e
+        puts e
+        next
+      end
+      hand.remove_card(card)
+      hand.render
     end
   end
 

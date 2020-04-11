@@ -71,6 +71,10 @@ class PlayerHand
   end
 
   def select_card(idx)
-    cards.delete_at(idx)
+    cards[idx]
+  end
+
+  def remove_card(card)
+    cards.delete(card)
   end
 end
