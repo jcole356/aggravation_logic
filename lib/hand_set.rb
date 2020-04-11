@@ -9,14 +9,20 @@ class HandSet
     @cards = []
   end
 
+  def complete?
+    cards.length >= num_cards
+  end
+
   def play(card)
     raise 'Invalid Move' unless valid_move?(card)
 
     cards << card
   end
 
-  # TODO: check other cards
-  def valid_move?(_card)
+  # TODO: check Wild cards
+  def valid_move?(card)
     return true if cards.empty?
+
+    card.matches?(cards.last)
   end
 end

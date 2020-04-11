@@ -28,9 +28,6 @@ class Player
     game.discard(card)
   end
 
-  # TODO: test with other letters and different cases
-  # TODO: this should take a card, hand should be re-rendered
-  # TODO: separate business logic from data fetching
   # TODO: pile class & logic, can a card be taken etc
   # TODO: draw should only offer a choice when valid
   def draw
