@@ -20,7 +20,12 @@ class HandSet
   end
 
   # TODO: check Wild cards
+  # TODO: wild card case needs specific reason
   def valid_move?(card)
+    if cards.length < 2
+      return false if card.wild?
+    end
+
     return true if cards.empty?
 
     card.matches?(cards.last)

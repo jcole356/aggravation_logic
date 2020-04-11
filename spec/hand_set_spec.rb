@@ -28,4 +28,26 @@ RSpec.describe 'Hand::valid_move?' do
 
     expect(set.valid_move?(card2)).to eq(false)
   end
+
+  context 'when the card is wild' do
+    it 'returns true if there are at least two natural cards' do
+      set = HandSet.new(3)
+      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
+      card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
+      set.cards << card1
+      set.cards << card2
+      card3 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
+
+      expect(set.valid_move?(card3)).to eq(true)
+    end
+
+    it 'returns flase if are not at least two natural cards' do
+      set = HandSet.new(3)
+      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
+      set.cards << card1
+      card2 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
+
+      expect(set.valid_move?(card2)).to eq(false)
+    end
+  end
 end
