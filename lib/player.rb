@@ -8,7 +8,7 @@ class Player
 
   attr_reader :name, :current_hand, :game
 
-  OPTIONS = {
+  PILE_OPTIONS = {
     d: 'Deck',
     p: 'Pile'
   }.freeze
@@ -34,7 +34,7 @@ class Player
   # TODO: pile class & logic, can a card be taken etc
   # TODO: draw should only offer a choice when valid
   def draw(choice)
-    return unless Player::OPTIONS.keys.include?(choice)
+    return unless Player::PILE_OPTIONS.keys.include?(choice)
 
     draw_response(choice)
     hand.cards << if choice == :d

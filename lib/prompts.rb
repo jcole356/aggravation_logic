@@ -16,12 +16,13 @@ module Prompts
   end
 
   def draw_prompt
-    prompt("Draw from #{Player::OPTIONS[:d]} (D) or #{Player::OPTIONS[:p]} (P)")
+    options = Player::PILE_OPTIONS
+    prompt("Draw from #{options[:d]} (D) or #{options[:p]} (P)")
       .downcase.to_sym
   end
 
   def draw_response(choice)
-    response("Drawing from the #{Player::OPTIONS[choice]}")
+    response("Drawing from the #{Player::PILE_OPTIONS[choice]}")
   end
 
   def play_prompt
