@@ -18,8 +18,7 @@ class HandSet
     cards.each do |card|
       player.hand.cards << card
     end
-    @cards = []
-    @value = nil
+    reset
   end
 
   def complete?
@@ -33,6 +32,11 @@ class HandSet
     card.current_value(value) if card.wild?
 
     cards << card
+  end
+
+  def reset
+    @cards = []
+    @value = nil
   end
 
   def valid_move?(card)
