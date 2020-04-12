@@ -51,7 +51,6 @@ class Player
     @hand ||= hand
   end
 
-  # TODO: validate pile choice
   def play
     loop do
       hand.render # TODO: may not want this every time
@@ -72,9 +71,8 @@ class Player
     end
   end
 
-  # TODO: need a way to end
   # TODO: game may need a card queue for invalid turns
-  # TODO; does not re-render hand
+  # TODO: does not re-render hand
   def play_card(pile)
     loop do
       card_choice = card_play_prompt
