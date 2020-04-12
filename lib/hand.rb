@@ -58,7 +58,8 @@ class PlayerHand
 
   # TODO: utils for rendering an array of cards
   def render
-    puts cards.map(&:display_name).join(' ')
+    puts cards.map.with_index { |card, idx| "(#{idx}) #{card.display_name}" }
+              .join(', ')
     puts ''
     sets&.each do |key, set|
       puts "(#{key.to_s.upcase}) Set of #{set.num_cards}"
