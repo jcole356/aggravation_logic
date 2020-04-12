@@ -74,3 +74,28 @@ RSpec.describe 'Hand::valid_move?' do
     end
   end
 end
+
+# TODO: going to need lots of factories to test all these things
+RSpec.describe 'Hand::abort_play' do
+  set = HandSet.new(3)
+  card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
+  card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
+  game = Game.new
+  player = Player.new('Kimie', game)
+
+  before(:each) do
+    set.play(card1)
+    set.play(card2)
+    game.players << player
+    game.deal
+    set.abort_play(player)
+  end
+
+  it 'returns cards to the player if the hand is incomplete' do
+    expect([card1, card2].all? { |c| player.hand.cards.include?(c) }).to eq(true)
+  end
+
+  it 'resets the value of the set' do
+    expect(set.value).to eq(nil)
+  end
+end

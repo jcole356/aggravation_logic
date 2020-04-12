@@ -19,6 +19,7 @@ class HandSet
       player.hand.cards << card
     end
     @cards = []
+    @value = nil
   end
 
   def complete?
