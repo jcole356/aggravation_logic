@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'card'
-require 'wild'
-require 'hand_set'
-
 RSpec.describe 'Hand::valid_move?' do
   it 'returns true if the set is empty' do
     set = HandSet.new(3)
@@ -14,9 +10,9 @@ RSpec.describe 'Hand::valid_move?' do
 
   it 'returns true if the card matches the set' do
     set = HandSet.new(3)
-    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
+    card1 = build(:card)
     set.play(card1)
-    card2 = Card.new(Card::SUITS[:hears], Card::VALUES[:five])
+    card2 = build(:card, suit: Card::SUITS[:hearts])
 
     expect(set.valid_move?(card2)).to eq(true)
   end
