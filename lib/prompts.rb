@@ -6,8 +6,12 @@ module Prompts
     input.chomp
   end
 
-  def card_select_prompt(action)
-    prompt("Enter the card index of the card you wish to #{action}").to_i
+  def card_discard_prompt
+    prompt('Enter the card index of the card you wish to discard').to_i
+  end
+
+  def card_play_prompt
+    prompt('Enter the card index of the card you wish to play, or S to stop')
   end
 
   def discard_response(card)

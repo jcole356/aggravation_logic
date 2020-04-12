@@ -20,9 +20,8 @@ class Player
     @score = 0
   end
 
-  # TODO: remove hardcoded string
   def discard
-    idx = card_select_prompt('discard')
+    idx = card_discard_prompt
     card = hand.select_card(idx)
     discard_response(card)
     game.discard(card)
@@ -52,8 +51,6 @@ class Player
     @hand ||= hand
   end
 
-  # TODO: choose a set of run by index to play on
-  # TODO: remove hardcoded string
   # TODO: validate pile choice
   def play
     loop do
@@ -80,8 +77,10 @@ class Player
   # TODO; does not re-render hand
   def play_card(pile)
     loop do
-      card_choice = card_select_prompt('play')
-      card = hand.select_card(card_choice)
+      card_choice = card_play_prompt
+      break if card_choice.downcase == 's'
+
+      card = hand.select_card(card_choice.to_i)
       begin
         pile.play(card)
       rescue StandardError => e
