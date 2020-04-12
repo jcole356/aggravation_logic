@@ -52,13 +52,12 @@ class Player
   end
 
   def play
-    pile = nil
+    piles = {}
     loop do
       hand.render # TODO: may not want this every time
       pile_choice = choose_pile_prompt
       break if pile_choice == :q
 
-      piles = {}
       piles.merge!(hand.sets) if hand.sets
       piles.merge!(hand.runs) if hand.runs
       pile = piles[pile_choice]
@@ -70,7 +69,9 @@ class Player
 
       play_card(pile) # TODO: maybe should be play_cards?
     end
-    pile.abort_play(self) unless pile.complete?
+    piles.each do |_key, pile|
+      pile.abort_play(self) unless pile.complete?
+    end
   end
 
   # TODO: game may need a card queue for invalid turns
