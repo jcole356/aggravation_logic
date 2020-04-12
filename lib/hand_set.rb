@@ -2,8 +2,7 @@
 
 # Class for defining set (avoids naming collision with Ruby Set)
 class HandSet
-  attr_reader :num_cards, :cards
-  attr_accessor :value
+  attr_reader :num_cards, :cards, :value
 
   def initialize(num_cards)
     @num_cards = num_cards
@@ -18,8 +17,7 @@ class HandSet
   def play(card)
     raise('Invalid Move') && return unless valid_move?(card)
 
-    value ||= card.value
-
+    @value ||= card.value
     card.current_value(value) if card.wild?
 
     cards << card
