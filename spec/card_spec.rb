@@ -18,7 +18,7 @@ RSpec.describe 'Card.all_cards' do
   end
 
   it 'returns 6 wild cards' do
-    expect(cards.filter { |card| card.class == Wild }.length).to eq(6)
+    expect(cards.filter(&:wild?).length).to eq(6)
   end
 
   it 'returns 4 twos' do
