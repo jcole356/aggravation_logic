@@ -2,7 +2,6 @@
 
 require 'card'
 
-# This will guess the User class
 FactoryBot.define do
   factory :card do
     suit { Card::SUITS[:diamonds] }

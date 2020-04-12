@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Hand::valid_move?' do
+  let(:card1) { build(:card) }
+
   it 'returns true if the set is empty' do
     set = HandSet.new(3)
-    card = build(:card)
 
-    expect(set.valid_move?(card)).to eq(true)
+    expect(set.valid_move?(card1)).to eq(true)
   end
 
   it 'returns true if the card matches the set' do
     set = HandSet.new(3)
-    card1 = build(:card)
     set.play(card1)
     card2 = build(:card, suit: Card::SUITS[:hearts])
 
@@ -19,9 +19,8 @@ RSpec.describe 'Hand::valid_move?' do
 
   it 'returns false if the card does not match set' do
     set = HandSet.new(3)
-    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
     set.play(card1)
-    card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:three])
+    card2 = build(:card, value: Card::VALUES[:three])
 
     expect(set.valid_move?(card2)).to eq(false)
   end
@@ -29,7 +28,6 @@ RSpec.describe 'Hand::valid_move?' do
   context 'when the card is wild' do
     it 'returns true if there are at least two natural cards' do
       set = HandSet.new(3)
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
       card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
       set.play(card1)
       set.play(card2)
@@ -40,7 +38,6 @@ RSpec.describe 'Hand::valid_move?' do
 
     it 'returns false if are not at least two natural cards' do
       set = HandSet.new(3)
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
       set.play(card1)
       card2 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
 
@@ -51,7 +48,6 @@ RSpec.describe 'Hand::valid_move?' do
   context 'when the previous card is wild' do
     it 'returns true if the card matches a natural card' do
       set = HandSet.new(3)
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
       card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
       set.play(card1)
       set.play(card2)
@@ -62,7 +58,6 @@ RSpec.describe 'Hand::valid_move?' do
 
     it 'returns false if it does not match a natural card' do
       set = HandSet.new(3)
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
       set.play(card1)
       card2 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
 
