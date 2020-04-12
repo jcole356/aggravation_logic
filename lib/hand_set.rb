@@ -10,6 +10,17 @@ class HandSet
     @value = nil
   end
 
+  # TODO: might end up sharing with run class
+  # TODO: don't allow players to put down if they don't have the hand
+  # ... but this may almost be cheating
+  # When the player can't put down, cards are returned to their hand
+  def abort_play(player)
+    cards.each do |card|
+      player.hand.cards << card
+    end
+    @cards = []
+  end
+
   def complete?
     cards.length >= num_cards
   end

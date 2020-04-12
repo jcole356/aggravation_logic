@@ -52,6 +52,7 @@ class Player
   end
 
   def play
+    pile = nil
     loop do
       hand.render # TODO: may not want this every time
       pile_choice = choose_pile_prompt
@@ -67,8 +68,9 @@ class Player
         next
       end
 
-      play_card(pile)
+      play_card(pile) # TODO: maybe should be play_cards?
     end
+    pile.abort_play(self) unless pile.complete?
   end
 
   # TODO: game may need a card queue for invalid turns
