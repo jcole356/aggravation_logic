@@ -18,8 +18,4 @@ class Ace < Card
   def rank
     super(current_value)
   end
-
-  def wild?
-    false
-  end
 end
