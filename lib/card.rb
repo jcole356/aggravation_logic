@@ -60,8 +60,7 @@ class Card
   end
 
   # Builds the standard deck
-  # rubocop:disable Metrics/MethodLength
-  def self.all_cards
+  def self.all_cards # rubocop:disable Metrics/MethodLength
     all_cards = []
     suits.each do |suit|
       values.each do |value|
@@ -77,7 +76,6 @@ class Card
     2.times { all_cards << Wild.new(nil, WILD[:joker]) }
     all_cards
   end
-  # rubocop:enable Metrics/MethodLength
 
   def display_name
     "#{value}#{suit}"
