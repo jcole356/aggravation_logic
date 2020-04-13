@@ -31,6 +31,11 @@ class Game
     pile << card
   end
 
+  # TODO: should be more restrictive about eligible cards
+  def draw_from_pile
+    pile.pop
+  end
+
   def number_of_players
     invalid = false
     num_players = nil

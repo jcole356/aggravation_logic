@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pry'
+
 # Class for building decks and card logic
 class Card
   attr_reader :suit, :value

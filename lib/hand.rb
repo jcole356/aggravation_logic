@@ -2,7 +2,7 @@
 
 # Class for the player's hand
 class PlayerHand
-  attr_reader :sets, :runs, :cards
+  attr_reader :sets, :runs, :cards, :down
 
   HANDS = [
     { sets: [2, 3] },
@@ -56,6 +56,10 @@ class PlayerHand
     puts "#{sets_string}#{runs_string}#{same_suit}"
   end
 
+  def max_size
+    17
+  end
+
   # TODO: utils for rendering an array of cards
   def render
     puts cards.map.with_index { |card, idx| "(#{idx}) #{card.display_name}" }
@@ -77,5 +81,6 @@ class PlayerHand
 
   def remove_card(card)
     cards.delete(card)
+    card
   end
 end

@@ -20,9 +20,14 @@ class Player
     @score = 0
   end
 
+  def can_draw_from_pile?
+    hand.down
+  end
+
   def discard
     idx = card_discard_prompt
     card = hand.select_card(idx)
+    hand.remove_card(card)
     discard_response(card)
     game.discard(card)
   end
@@ -45,6 +50,10 @@ class Player
                     end
       draw_response(choice)
     end
+  end
+
+  def draw_from_pile
+    return game.draw_from_pile if can_draw_from_pile?
   end
 
   def hand(hand = nil)
