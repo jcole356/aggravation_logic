@@ -91,7 +91,7 @@ RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
 
   context 'when the card is not the same suit' do
     it 'returns false' do
-      card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:eight])
+      card2 = build(:card, suit: Card::SUITS[:hearts], value: Card::VALUES[:eight])
 
       expect(card2.next?(card1)).to eq(false)
     end

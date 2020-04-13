@@ -2,6 +2,7 @@
 
 RSpec.describe 'Hand::valid_move?' do # rubocop:disable Metrics/BlockLength
   let(:card1) { build(:card) }
+  let(:wild) { build(:wild) }
 
   it 'returns true if the set is empty' do
     set = HandSet.new(3)
@@ -28,40 +29,36 @@ RSpec.describe 'Hand::valid_move?' do # rubocop:disable Metrics/BlockLength
   context 'when the card is wild' do
     it 'returns true if there are at least two natural cards' do
       set = HandSet.new(3)
-      card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
+      card2 = build(:card, suit: Card::SUITS[:hearts])
       set.play(card1)
       set.play(card2)
-      card3 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
 
-      expect(set.valid_move?(card3)).to eq(true)
+      expect(set.valid_move?(wild)).to eq(true)
     end
 
     it 'returns false if are not at least two natural cards' do
       set = HandSet.new(3)
       set.play(card1)
-      card2 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
 
-      expect(set.valid_move?(card2)).to eq(false)
+      expect(set.valid_move?(wild)).to eq(false)
     end
   end
 
   context 'when the previous card is wild' do
     it 'returns true if the card matches a natural card' do
       set = HandSet.new(3)
-      card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
+      card2 = build(:card, suit: Card::SUITS[:hearts], value: Card::VALUES[:five])
       set.play(card1)
       set.play(card2)
-      card3 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
 
-      expect(set.valid_move?(card3)).to eq(true)
+      expect(set.valid_move?(wild)).to eq(true)
     end
 
     it 'returns false if it does not match a natural card' do
       set = HandSet.new(3)
       set.play(card1)
-      card2 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
 
-      expect(set.valid_move?(card2)).to eq(false)
+      expect(set.valid_move?(wild)).to eq(false)
     end
   end
 end
