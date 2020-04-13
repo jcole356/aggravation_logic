@@ -81,6 +81,7 @@ class Player
     piles.each do |_key, pile|
       pile.abort_play(self) unless pile.complete?
     end
+    hand.down = true if piles.all?(&:complete?)
   end
 
   # TODO: game may need a card queue for invalid turns

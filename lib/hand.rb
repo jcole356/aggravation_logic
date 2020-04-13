@@ -2,7 +2,8 @@
 
 # Class for the player's hand
 class PlayerHand
-  attr_reader :sets, :runs, :cards, :down
+  attr_reader :sets, :runs, :cards
+  attr_accessor :down
 
   HANDS = [
     { sets: [2, 3] },
