@@ -21,7 +21,7 @@ class Player
   end
 
   def can_draw_from_pile?
-    hand.down
+    !hand.down
   end
 
   def discard
