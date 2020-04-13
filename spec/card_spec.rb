@@ -3,6 +3,7 @@
 require 'card'
 require 'ace'
 require 'wild'
+require 'support/factory_bot'
 
 RSpec.describe 'Card.all_cards' do
   cards = Card.all_cards
