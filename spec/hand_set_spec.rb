@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Hand::valid_move?' do
+RSpec.describe 'Hand::valid_move?' do # rubocop:disable Metrics/BlockLength
   let(:card1) { build(:card) }
 
   it 'returns true if the set is empty' do

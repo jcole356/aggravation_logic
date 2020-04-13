@@ -33,16 +33,16 @@ RSpec.describe 'Card.all_cards' do
 end
 
 RSpec.describe 'Card::matches?' do
+  let(:card1) { build(:card) }
+
   it 'returns true if the cards have the same value' do
-    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:five])
-    card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
+    card2 = build(:card, value: Card::VALUES[:five])
 
     expect(card1.matches?(card2)).to eq(true)
   end
 
   it 'returns true if one card is wild' do
-    card1 = Wild.new(Card::SUITS[:diamonds], Card::VALUES[:two])
-    card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:five])
+    card2 = Wild.new(Card::SUITS[:diamonds], Card::VALUES[:two])
 
     expect(card1.matches?(card2)).to eq(true)
   end
@@ -55,8 +55,7 @@ RSpec.describe 'Card::matches?' do
   end
 
   it 'returns false if one card does not match' do
-    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
-    card2 = Card.new(Card::SUITS[:spades], Card::VALUES[:three])
+    card2 = build(:card, suit: Card::SUITS[:spades], value: Card::VALUES[:three])
 
     expect(card1.matches?(card2)).to eq(false)
   end
