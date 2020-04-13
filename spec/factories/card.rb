@@ -10,3 +10,11 @@ FactoryBot.define do
     initialize_with { new(suit, value) }
   end
 end
+
+FactoryBot.define do
+  factory :ace do
+    suit { Card::SUITS[:diamonds] }
+
+    initialize_with { new(suit) }
+  end
+end

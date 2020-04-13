@@ -106,7 +106,7 @@ RSpec.describe 'Card::points' do
     card1 = build(:card, value: Card::VALUES[:seven])
     card2 = build(:card, value: Card::VALUES[:eight])
     card3 = Wild.new(nil, Card::VALUES[:two])
-    card4 = Ace.new(Card::SUITS[:diamonds])
+    card4 = build(:ace)
 
     expect(card1.points).to eq(5)
     expect(card2.points).to eq(10)
@@ -130,14 +130,14 @@ RSpec.describe 'Card::rank' do
   end
 
   it 'returns the correct rank of an ace low' do
-    card = Ace.new(Card::SUITS[:diamonds])
+    card = build(:ace)
     card.current_value(Card::VALUES[:ace])
 
     expect(card.rank).to eq(1)
   end
 
   it 'returns the correct rank of an ace high' do
-    card = Ace.new(Card::SUITS[:diamonds])
+    card = build(:ace)
     card.current_value(Card::SPECIAL[:ace_high])
 
     expect(card.rank).to eq(14)
@@ -146,7 +146,7 @@ end
 
 RSpec.describe 'Card::same_suit?' do
   it 'returns true if the cards have the same suit' do
-    card1 = Ace.new(Card::SUITS[:diamonds])
+    card1 = build(:ace)
     card2 = build(:card, value: Card::VALUES[:jack])
 
     expect(card1.same_suit?(card2)).to eq(true)
