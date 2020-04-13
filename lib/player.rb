@@ -21,7 +21,7 @@ class Player
   end
 
   def can_draw_from_pile?
-    !hand.down
+    !hand.down && !game.pile.empty?
   end
 
   def discard
@@ -35,25 +35,24 @@ class Player
   # TODO: pile class & logic, can a card be taken etc
   # TODO: draw should only offer a choice when valid
   def draw
-    choice = nil
-
-    until Player::PILE_OPTIONS.keys.include?(choice)
+    loop do
       choice = draw_prompt
 
       hand.cards << if choice == :d
                       game.deck.draw
-                    elsif choice == :p
+                    elsif choice == :p && can_draw_from_pile?
                       game.pile.pop
                     else
                       invalid_selection_response
                       next
                     end
       draw_response(choice)
+      break
     end
   end
 
   def draw_from_pile
-    return game.draw_from_pile if can_draw_from_pile?
+    game.draw_from_pile
   end
 
   def hand(hand = nil)
@@ -81,7 +80,7 @@ class Player
     piles.each do |_key, pile|
       pile.abort_play(self) unless pile.complete?
     end
-    hand.down = true if piles.all?(&:complete?)
+    hand.down = true if piles.values.all?(&:complete?)
   end
 
   # TODO: game may need a card queue for invalid turns
