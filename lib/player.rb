@@ -32,7 +32,6 @@ class Player
     game.discard(card)
   end
 
-  # TODO: pile class & logic, can a card be taken etc
   # TODO: draw should only offer a choice when valid
   def draw
     loop do
@@ -41,7 +40,7 @@ class Player
       hand.cards << if choice == :d
                       game.deck.draw
                     elsif choice == :p && can_draw_from_pile?
-                      game.pile.pop
+                      draw_from_pile
                     else
                       invalid_selection_response
                       next

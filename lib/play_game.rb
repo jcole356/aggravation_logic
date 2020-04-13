@@ -8,6 +8,7 @@ require_relative 'hand'
 require_relative 'hand_set'
 require_relative 'run'
 require_relative 'player'
+require_relative 'pile'
 require_relative 'game'
 
 game = Game.new

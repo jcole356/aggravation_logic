@@ -14,7 +14,7 @@ class Game
     @players = []
     @deck = Deck.new(2)
     @deck.shuffle
-    @pile = []
+    @pile = Pile.new
   end
 
   def build_hand(player)
@@ -28,12 +28,11 @@ class Game
   end
 
   def discard(card)
-    pile << card
+    pile.cards << card
   end
 
-  # TODO: should be more restrictive about eligible cards
   def draw_from_pile
-    pile.pop
+    pile.cards.pop
   end
 
   def number_of_players
