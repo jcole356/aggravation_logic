@@ -49,7 +49,7 @@ RSpec.describe 'Card::matches?' do
 
   it 'returns true if both cards are wild' do
     card1 = Wild.new(Card::SUITS[:diamonds], Card::VALUES[:two])
-    card2 = Card.new(nil, Card::WILD[:joker])
+    card2 = Wild.new(nil, Card::WILD[:joker])
 
     expect(card1.matches?(card2)).to eq(true)
   end
@@ -62,10 +62,11 @@ RSpec.describe 'Card::matches?' do
 end
 
 RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
+  let(:card1) { build(:card) }
+
   context 'when the card is the same suit' do
     it 'returns true if the card is the next in the sequence' do
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
-      card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:eight])
+      card2 = build(:card, value: Card::VALUES[:six])
 
       expect(card2.next?(card1)).to eq(true)
     end
@@ -73,20 +74,18 @@ RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
 
   context 'when the previous card is wild' do
     it 'returns true if the card is the next in the sequence' do
-      card1 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
-      card1.current_value(Card::VALUES[:seven])
-      card1.current_suit(Card::SUITS[:diamonds])
-      card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:eight])
+      card2 = Wild.new(Card::SUITS[:hearts], Card::VALUES[:two])
+      card2.current_value(Card::VALUES[:four])
+      card2.current_suit(Card::SUITS[:diamonds])
 
-      expect(card2.next?(card1)).to eq(true)
+      expect(card1.next?(card2)).to eq(true)
     end
   end
 
   context 'when the card is wild' do
     it 'returns true' do
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
       card2 = Wild.new(nil, Card::WILD[:joker])
-      card2.current_value(Card::VALUES[:eight])
+      card2.current_value(Card::VALUES[:six])
       card2.current_suit(Card::SUITS[:diamonds])
 
       expect(card2.next?(card1)).to eq(true)
@@ -95,7 +94,6 @@ RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
 
   context 'when the card is not the same suit' do
     it 'returns false' do
-      card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
       card2 = Card.new(Card::SUITS[:hearts], Card::VALUES[:eight])
 
       expect(card2.next?(card1)).to eq(false)
@@ -105,8 +103,8 @@ end
 
 RSpec.describe 'Card::points' do
   it 'returns the point value of the card' do
-    card1 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:seven])
-    card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:eight])
+    card1 = build(:card, value: Card::VALUES[:seven])
+    card2 = build(:card, value: Card::VALUES[:eight])
     card3 = Wild.new(nil, Card::VALUES[:two])
     card4 = Ace.new(Card::SUITS[:diamonds])
 
@@ -119,16 +117,16 @@ end
 
 RSpec.describe 'Card::rank' do
   it 'returns the rank of a standard card' do
-    card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:jack])
+    card = build(:card, value: Card::VALUES[:jack])
 
-    expect(card2.rank).to eq(11)
+    expect(card.rank).to eq(11)
   end
 
   it 'returns the current rank of a wild card' do
-    card2 = Wild.new(nil, Card::WILD[:joker])
-    card2.current_value(Card::VALUES[:three])
+    card = Wild.new(nil, Card::WILD[:joker])
+    card.current_value(Card::VALUES[:three])
 
-    expect(card2.rank).to eq(3)
+    expect(card.rank).to eq(3)
   end
 
   it 'returns the correct rank of an ace low' do
@@ -149,7 +147,7 @@ end
 RSpec.describe 'Card::same_suit?' do
   it 'returns true if the cards have the same suit' do
     card1 = Ace.new(Card::SUITS[:diamonds])
-    card2 = Card.new(Card::SUITS[:diamonds], Card::VALUES[:jack])
+    card2 = build(:card, value: Card::VALUES[:jack])
 
     expect(card1.same_suit?(card2)).to eq(true)
   end
@@ -169,7 +167,7 @@ RSpec.describe 'Card::wild?' do
   end
 
   it 'returns false if card is not wild' do
-    card = Card.new(Card::SUITS[:hearts], Card::VALUES[:king])
+    card = build(:card)
 
     expect(card.wild?).to eq(false)
   end
