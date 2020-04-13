@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pile'
+
 RSpec.describe 'Hand::valid_move?' do # rubocop:disable Metrics/BlockLength
   let(:card1) { build(:card) }
   let(:wild) { build(:wild) }
