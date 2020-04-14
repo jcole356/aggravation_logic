@@ -28,7 +28,7 @@ class Game
   end
 
   def discard(card)
-    pile.cards << card
+    pile.discard(card)
   end
 
   # TODO: test
