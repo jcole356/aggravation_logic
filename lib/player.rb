@@ -72,6 +72,7 @@ class Player
     piles = {}
     loop do
       hand.render # TODO: may not want this every time
+      hand.render_piles
       pile_choice = choose_pile_prompt
       break if pile_choice == :q
 
@@ -108,13 +109,14 @@ class Player
       end
       hand.remove_card(card)
       hand.render
+      hand.render_piles
     end
   end
 
   def play_or_discard
     choice = nil
 
-    until Player::PILE_OPTIONS.keys.include?(choice)
+    until choice == :d
       choice = play_prompt
 
       if choice == :p
@@ -131,7 +133,6 @@ class Player
 
   def render_hand
     hand.render
-    # PlayerHand.render(current_hand)
   end
 
   def take_turn

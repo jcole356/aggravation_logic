@@ -10,7 +10,7 @@ class Pile
   end
 
   def can_draw_from_pile?
-    !empty && can_draw_top_card
+    !empty? && can_draw_top_card
   end
 
   def discard(card)

@@ -82,6 +82,7 @@ class Game
       puts "#{player.name}'s cards"
       PlayerHand.render(player.current_hand)
       player.hand.render_piles
+      puts ''
     end
   end
 
