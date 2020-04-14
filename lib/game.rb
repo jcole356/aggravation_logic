@@ -31,6 +31,16 @@ class Game
     pile.cards << card
   end
 
+  # TODO: test
+  def draw_from_deck
+    if deck.empty?
+      deck.cards = pile.cards
+      pile.cards = []
+    end
+    deck.shuffle
+    deck.draw
+  end
+
   def draw_from_pile
     pile.cards.pop
   end

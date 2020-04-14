@@ -16,6 +16,10 @@ class Deck
     cards.shift
   end
 
+  def empty?
+    cards.empty?
+  end
+
   def shuffle
     @cards.shuffle!
   end
