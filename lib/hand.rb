@@ -66,6 +66,9 @@ class PlayerHand
     puts cards.map.with_index { |card, idx| "(#{idx}) #{card.display_name}" }
               .join(', ')
     puts ''
+  end
+
+  def render_piles
     sets&.each do |key, set|
       puts "(#{key.to_s.upcase}) Set of #{set.num_cards}"
       puts set.cards.map(&:display_name).join(' ')

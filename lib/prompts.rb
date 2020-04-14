@@ -11,7 +11,7 @@ module Prompts
   end
 
   def card_play_prompt
-    prompt('Enter the card index of the card you wish to play, or S to stop')
+    prompt('Enter the card index of the card you wish to play, P to steal from another players hand or S to stop')
   end
 
   def discard_response(card)
@@ -44,6 +44,14 @@ module Prompts
 
   def number_of_players_prompt
     prompt('How many players?').to_i
+  end
+
+  def swap_card_prompt
+    prompt('Which card would you like to steal?').to_i
+  end
+
+  def swap_player_prompt
+    prompt('Which player would you like to steal from?')
   end
 
   def prompt(message)

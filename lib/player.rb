@@ -24,6 +24,12 @@ class Player
     @score = 0
   end
 
+  def swap
+    player_choice = swap_player_prompt
+    card_choice = swap_card_prompt
+    puts "You are going to steal from #{player_choice}, #{card_choice}"
+  end
+
   def can_draw_from_pile?
     !hand.down && game.pile.can_draw_from_pile?
   end
@@ -125,12 +131,13 @@ class Player
 
   def render_hand
     hand.render
-    PlayerHand.render(current_hand)
+    # PlayerHand.render(current_hand)
   end
 
   def take_turn
     puts "#{name}'s turn"
     render_hand
+    game.render_hands
     game.render_pile
     draw
     hand.render

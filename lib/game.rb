@@ -77,6 +77,14 @@ class Game
   end
   # rubocop:enable Metrics/MethodLength
 
+  def render_hands
+    players.each do |player|
+      puts "#{player.name}'s cards"
+      PlayerHand.render(player.current_hand)
+      player.hand.render_piles
+    end
+  end
+
   def render_pile
     if pile.empty?
       puts 'No Pile'
