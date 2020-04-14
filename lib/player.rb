@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# rubocop:disable Lint/MissingCopEnableDirective
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
+
 require_relative 'prompts'
 
 # Class for player logic
