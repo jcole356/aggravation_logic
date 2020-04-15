@@ -3,7 +3,7 @@
 require 'pry'
 
 # Class for building decks and card logic
-class Card
+class Card # rubocop:disable Metrics/ClassLength
   attr_reader :suit, :value
 
   SUITS = {
