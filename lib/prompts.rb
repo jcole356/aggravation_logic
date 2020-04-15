@@ -50,8 +50,12 @@ module Prompts
     prompt('Which card would you like to steal?').to_i
   end
 
+  def swap_pile_prompt
+    prompt('Which pile would you like to steal from?').to_i
+  end
+
   def swap_player_prompt
-    prompt('Which player would you like to steal from?')
+    prompt('Which player would you like to steal from?').to_i
   end
 
   def prompt(message)

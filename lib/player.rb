@@ -26,8 +26,9 @@ class Player
 
   def swap
     player_choice = swap_player_prompt
+    pile_choice = swap_pile_prompt
     card_choice = swap_card_prompt
-    puts "You are going to steal from #{player_choice}, #{card_choice}"
+    puts "You are going to steal from #{player_choice}, #{pile_choice} #{card_choice}"
   end
 
   def can_draw_from_pile?

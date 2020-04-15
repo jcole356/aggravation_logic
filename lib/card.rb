@@ -55,6 +55,11 @@ class Card
     VALUES.values
   end
 
+  def self.render_cards(cards)
+    puts cards.map.with_index { |card, idx| "(#{idx}) #{card.display_name}" }
+              .join(', ')
+  end
+
   def self.wild_cards
     WILD.values
   end

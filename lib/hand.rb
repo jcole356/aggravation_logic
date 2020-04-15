@@ -61,21 +61,19 @@ class PlayerHand
     17
   end
 
-  # TODO: utils for rendering an array of cards
   def render
-    puts cards.map.with_index { |card, idx| "(#{idx}) #{card.display_name}" }
-              .join(', ')
+    Card.render_cards(cards)
     puts ''
   end
 
-  def render_piles # rubocop:disable Metrics/AbcSize
+  def render_piles
     sets&.each_with_index do |set, idx|
       puts "(#{idx}) Set of #{set.num_cards}"
-      puts set.cards.map(&:display_name).join(' ')
+      Card.render_cards(set.cards)
     end
     runs&.each_with_index do |run, idx|
       puts "(#{idx}) Set of #{run.num_cards}"
-      puts run.cards.map(&:display_name).join(' ')
+      Card.render_cards(run.cards)
     end
   end
 
