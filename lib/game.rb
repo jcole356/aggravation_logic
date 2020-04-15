@@ -78,8 +78,8 @@ class Game
   # rubocop:enable Metrics/MethodLength
 
   def render_hands
-    players.each do |player|
-      puts "#{player.name}'s cards"
+    players.each_with_index do |player, idx|
+      puts "(#{idx}) #{player.name}'s cards"
       PlayerHand.render(player.current_hand)
       player.hand.render_piles
       puts ''
