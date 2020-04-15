@@ -34,8 +34,8 @@ module Prompts
   end
 
   def choose_pile_prompt
-    prompt('Choose a set or run via S# or R#. Enter Q to to stop playing')
-      .downcase.to_sym
+    prompt('Choose a set or run via S# or R#. Enter 9 to to stop playing')
+      .to_i
   end
 
   def invalid_selection_response

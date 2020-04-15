@@ -29,9 +29,9 @@ class PlayerHand
   def self.build_runs(runs)
     return nil if runs.nil?
 
-    result = {}
+    result = []
     runs.first.times do
-      result["r#{idx}".to_sym] = Run.new(runs[1], runs[2])
+      result << Run.new(runs[1], runs[2])
     end
     result
   end
@@ -40,9 +40,9 @@ class PlayerHand
   def self.build_sets(sets)
     return nil if sets.nil?
 
-    result = {}
-    sets.first.times do |idx|
-      result["s#{idx}".to_sym] = HandSet.new(sets[1])
+    result = []
+    sets.first.times do
+      result << HandSet.new(sets[1])
     end
     result
   end
@@ -68,13 +68,13 @@ class PlayerHand
     puts ''
   end
 
-  def render_piles
-    sets&.each do |key, set|
-      puts "(#{key.to_s.upcase}) Set of #{set.num_cards}"
+  def render_piles # rubocop:disable Metrics/AbcSize
+    sets&.each_with_index do |set, idx|
+      puts "(#{idx}) Set of #{set.num_cards}"
       puts set.cards.map(&:display_name).join(' ')
     end
-    runs&.each do |key, run|
-      puts "(#{key.to_s.upcase}) Set of #{run.num_cards}"
+    runs&.each_with_index do |run, idx|
+      puts "(#{idx}) Set of #{run.num_cards}"
       puts run.cards.map(&:display_name).join(' ')
     end
   end
