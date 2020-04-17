@@ -71,7 +71,7 @@ RSpec.describe 'Hand::abort_play' do
   let(:card2) { build(:card, suit: Card::SUITS[:hearts]) }
   set = HandSet.new(3)
   game = Game.new
-  player = Player.new('Kimie', game)
+  let(:player) { build(:player, game: game) }
 
   before(:each) do
     set.play(card1)
