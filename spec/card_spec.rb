@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# rubocop:disable Lint/MissingCopEnableDirective
+# rubocop:disable Metrics/BlockLength
+
 require 'card'
 require 'ace'
 require 'wild'
@@ -38,17 +41,18 @@ RSpec.describe 'Card::matches?' do
   let(:wild) { build(:wild) }
 
   it 'returns true if the cards have the same value' do
-    card2 = build(:card, suit: Card::SUITS[:hearts], value: Card::VALUES[:five])
+    card2 = build(:card, suit: Card::SUITS[:hearts], value: card1.value)
 
     expect(card1.matches?(card2)).to eq(true)
   end
 
   it 'returns true if one card is wild' do
-    expect(card1.matches?(wild)).to eq(true)
+    expect(wild.matches?(card1)).to eq(true)
   end
 
   it 'returns true if both cards are wild' do
     card2 = build(:wild, suit: nil, value: Card::WILD[:joker])
+    card2.current_value(card1.value)
 
     expect(wild.matches?(card2)).to eq(true)
   end
@@ -58,9 +62,24 @@ RSpec.describe 'Card::matches?' do
 
     expect(card1.matches?(card2)).to eq(false)
   end
+
+  context 'when suit matters' do
+    it 'returns true when the suits and values are the same' do
+      card2 = build(:card, suit: card1.suit, value: card1.value)
+
+      expect(card1.matches?(card2, true)).to eq(true)
+    end
+
+    it 'returns false when the suits are not the same' do
+      wild.current_suit(Card::SUITS[:spades])
+      wild.current_suit(Card::VALUES[:six])
+
+      expect(card1.matches?(wild, true)).to eq(false)
+    end
+  end
 end
 
-RSpec.describe 'Card::next?' do # rubocop:disable Metrics/BlockLength
+RSpec.describe 'Card::next?' do
   let(:card1) { build(:card) }
   let(:wild) { build(:wild) }
 

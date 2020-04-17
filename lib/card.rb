@@ -5,6 +5,7 @@ require 'pry'
 # Class for building decks and card logic
 class Card # rubocop:disable Metrics/ClassLength
   attr_reader :suit, :value
+  attr_accessor :path
 
   SUITS = {
     diamonds: 'D',
@@ -41,6 +42,7 @@ class Card # rubocop:disable Metrics/ClassLength
   def initialize(suit, value)
     @suit = suit
     @value = value
+    @path = []
   end
 
   def self.special
@@ -86,9 +88,23 @@ class Card # rubocop:disable Metrics/ClassLength
     "#{value}#{suit}"
   end
 
-  # TODO: may not need this
-  def matches?(card)
-    wild? || card.wild? || current_value == card.current_value
+  # Arg card must have current_values established
+  def matches?(card, suit = false)
+    return matches_value?(card) && matches_suit?(card) if suit
+
+    matches_value?(card)
+  end
+
+  def matches_suit?(card)
+    return false unless card.current_suit
+
+    wild? || current_suit == card.current_suit
+  end
+
+  def matches_value?(card)
+    return false unless card.current_value
+
+    wild? || current_value == card.current_value
   end
 
   # Can the current card be played next in a run
