@@ -49,7 +49,9 @@ RSpec.describe 'HandSet::valid_move?' do # rubocop:disable Metrics/BlockLength
   context 'when the previous card is wild' do
     it 'returns true if the card matches a natural card' do
       set = HandSet.new(3)
-      card2 = build(:card, suit: Card::SUITS[:hearts], value: Card::VALUES[:five])
+      card2 = build(:card,
+                    suit: Card::SUITS[:hearts],
+                    value: Card::VALUES[:five])
       set.play(card1)
       set.play(card2)
 
@@ -68,7 +70,7 @@ end
 RSpec.describe 'HandSet::abort_play' do
   let(:card1) { build(:card) }
   let(:card2) { build(:card, suit: Card::SUITS[:hearts]) }
-  let(:set) { build(:hand_set, num_cards: 3)}
+  let(:set) { build(:hand_set, num_cards: 3) }
   let(:game) { build(:game) }
   let(:player) { build(:player, game: game) }
 
