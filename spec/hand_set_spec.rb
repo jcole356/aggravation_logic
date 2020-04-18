@@ -2,7 +2,7 @@
 
 require 'pile'
 
-RSpec.describe 'Hand::valid_move?' do # rubocop:disable Metrics/BlockLength
+RSpec.describe 'HandSet::valid_move?' do # rubocop:disable Metrics/BlockLength
   let(:card1) { build(:card) }
   let(:wild) { build(:wild) }
 
@@ -65,12 +65,11 @@ RSpec.describe 'Hand::valid_move?' do # rubocop:disable Metrics/BlockLength
   end
 end
 
-# TODO: going to need lots of factories to test all these things
-RSpec.describe 'Hand::abort_play' do
+RSpec.describe 'HandSet::abort_play' do
   let(:card1) { build(:card) }
   let(:card2) { build(:card, suit: Card::SUITS[:hearts]) }
-  set = HandSet.new(3)
-  game = Game.new
+  let(:set) { build(:hand_set, num_cards: 3)}
+  let(:game) { build(:game) }
   let(:player) { build(:player, game: game) }
 
   before(:each) do
@@ -78,7 +77,7 @@ RSpec.describe 'Hand::abort_play' do
     set.play(card2)
     game.players << player
     game.deal
-    set.abort_play(player)
+    set.abort_play(player.hand)
   end
 
   it 'returns cards to the player if the hand is incomplete' do

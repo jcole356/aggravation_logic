@@ -1,14 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: Create a global require file
-require 'deck'
-require 'card'
-require 'ace'
-require 'wild'
-require 'hand'
-require 'hand_set'
-require 'run'
-
 RSpec.describe 'Hand.initialize' do
   cards = Deck.new(1).shuffle
 
