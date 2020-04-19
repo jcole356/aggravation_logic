@@ -14,9 +14,9 @@ class HandSet
   # TODO: don't allow players to put down if they don't have the hand
   # ... but this may almost be cheating
   # When the player can't put down, cards are returned to their hand
-  def abort_play(player)
+  def abort_play(hand)
     cards.each do |card|
-      player.hand.cards << card
+      hand.cards << card
     end
     reset
   end
@@ -32,6 +32,13 @@ class HandSet
     card.current_value(value) if card.wild?
 
     cards << card
+  end
+
+  # Returns the index
+  def remove_card(card)
+    idx = cards.index(card)
+    cards.delete(card)
+    idx
   end
 
   def reset

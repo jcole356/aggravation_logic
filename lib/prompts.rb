@@ -10,6 +10,11 @@ module Prompts
     prompt('Enter the card index of the card you wish to discard').to_i
   end
 
+  # TODO: rename this
+  def card_swap_prompt
+    prompt('Enter the card index of the card you wish to swap').to_i
+  end
+
   def card_play_prompt
     prompt('Enter the card index of the card you wish to play, P to steal from another players hand or S to stop')
   end

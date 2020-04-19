@@ -3,6 +3,7 @@
 # rubocop:disable Lint/MissingCopEnableDirective
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/AbcSize
 
 require_relative 'prompts'
 
@@ -24,13 +25,6 @@ class Player
     @score = 0
   end
 
-  def swap
-    player_choice = swap_player_prompt
-    pile_choice = swap_pile_prompt
-    card_choice = swap_card_prompt
-    puts "You are going to steal from #{player_choice}, #{pile_choice} #{card_choice}"
-  end
-
   def can_draw_from_pile?
     !hand.down && game.pile.can_draw_from_pile?
   end
@@ -43,7 +37,7 @@ class Player
     game.discard(card)
   end
 
-  # TODO: draw should only offer a choice when valid
+  # TODO: draw should only offer valid choices
   def draw
     loop do
       choice = draw_prompt
@@ -65,20 +59,32 @@ class Player
     game.draw_from_pile
   end
 
+  def get_card_from_player(coords)
+    other_player = get_other_player(coords)
+    other_player_pile = get_other_player_pile(other_player, coords)
+    other_player_pile.cards[coords[2]]
+  end
+
+  def get_other_player(coords)
+    game.players[coords[0]]
+  end
+
+  def get_other_player_pile(player, coords)
+    player.hand.piles[coords[1]]
+  end
+
   def hand(hand = nil)
     @hand ||= hand
   end
 
   def play
-    piles = []
+    piles = hand.piles
     loop do
-      hand.render # TODO: may not want this every time
+      hand.render
       hand.render_piles
       pile_choice = choose_pile_prompt
       break if pile_choice == 9
 
-      piles += hand.sets if hand.sets
-      piles += hand.runs if hand.runs
       pile = piles[pile_choice]
 
       if pile.nil?
@@ -86,21 +92,17 @@ class Player
         next
       end
 
-      play_card(pile) # TODO: maybe should be play_cards?
+      play_card(pile)
     end
-    # TODO: all?
-    piles.each do |pile|
-      pile.abort_play(self) unless pile.complete?
-    end
-    hand.down = true if piles.all?(&:complete?)
+    hand.validate
   end
 
-  # TODO: game may need a card queue for invalid turns
-  # TODO: does not re-render hand
   def play_card(pile)
     loop do
       card_choice = card_play_prompt
       break if card_choice.downcase == 's'
+
+      swap if card_choice.downcase == 'p'
 
       card = hand.select_card(card_choice.to_i)
       begin
@@ -135,6 +137,49 @@ class Player
 
   def render_hand
     hand.render
+  end
+
+  # TODO: Need to handle undo
+  # @coord: [player, pile, index]
+  def swap
+    card_coord = []
+    # TODO: need to list the players
+    player_choice_idx = swap_player_prompt
+    card_coord << player_choice_idx
+    player = game.players[player_choice_idx]
+    puts player # TODO: remove
+
+    pile_choice_idx = swap_pile_prompt
+    pile = player.hand.piles[pile_choice_idx]
+    card_coord << pile_choice_idx
+    puts pile # TODO: remove
+
+    card_choice_idx = swap_card_prompt
+    card = pile.cards[card_choice_idx]
+    card.render # TODO: remove
+
+    card_coord << card_choice_idx
+
+    puts "Card coord #{card_coord}"
+    puts "You are going to steal from #{player_choice_idx}, #{pile_choice_idx} #{card_choice_idx}"
+    own_card_choice = card_swap_prompt
+    puts hand.cards[own_card_choice]
+    puts "You chose to swap your #{own_card_choice}"
+    swap_cards(hand.cards[own_card_choice], card_coord)
+  end
+
+  # TODO: might need to add a turn class with card queue
+  # Swapping logic only, no prompts
+  def swap_cards(card, coords)
+    other_player = get_other_player(coords)
+    other_player_card = get_card_from_player(coords)
+    return false unless other_player_card.matches?(card)
+
+    other_player_pile = get_other_player_pile(other_player, coords)
+    other_card_index = other_player_pile.remove_card(other_player_card)
+    hand.remove_card(card)
+    other_player_pile.cards.insert(other_card_index, card)
+    true
   end
 
   def take_turn

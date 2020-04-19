@@ -61,6 +61,13 @@ class PlayerHand
     17
   end
 
+  def piles
+    piles = []
+    piles += sets if sets
+    piles += runs if runs
+    piles
+  end
+
   def render
     Card.render_cards(cards)
     puts ''
@@ -84,5 +91,12 @@ class PlayerHand
   def remove_card(card)
     cards.delete(card)
     card
+  end
+
+  def validate
+    piles.each do |pile|
+      pile.abort_play(self) unless pile.complete?
+    end
+    @down = true if piles.all?(&:complete?)
   end
 end
