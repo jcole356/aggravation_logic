@@ -9,6 +9,7 @@ class Game
   attr_reader :players, :deck, :pile
 
   # TODO: figure out how many players require a third deck
+  # TODO: add constants for maximum number of players
   def initialize
     @players = []
     @deck = Deck.new(2)
@@ -59,8 +60,7 @@ class Game
   # Turns
   # Steals
   # Borrowing
-  # rubocop:disable Metrics/MethodLength
-  def play
+  def play # rubocop:disable Metrics/MethodLength
     num_players = number_of_players
     num_players.times do
       puts 'Please enter your name'
@@ -73,7 +73,6 @@ class Game
       players.each(&:take_turn)
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def render_hands
     players.each_with_index do |player, idx|
@@ -93,10 +92,7 @@ class Game
     end
   end
 
-  # TODO: add constants for maximum number of players
   def valid_number_of_players(num)
-    return false if num.nil?
-
     num.positive? && num < 5
   end
 end
