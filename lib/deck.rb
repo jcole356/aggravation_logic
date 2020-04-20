@@ -2,7 +2,7 @@
 
 # Class to buid and manage deck of cards
 class Deck
-  attr_reader :cards
+  attr_accessor :cards
 
   def initialize(num_decks)
     @num_decks = num_decks

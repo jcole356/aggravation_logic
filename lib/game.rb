@@ -9,7 +9,6 @@ class Game
   attr_reader :players, :deck, :pile
 
   # TODO: figure out how many players require a third deck
-  # TODO: need to reshuffle the discard pile when the deck is empty
   def initialize
     @players = []
     @deck = Deck.new(2)
@@ -31,13 +30,12 @@ class Game
     pile.discard(card)
   end
 
-  # TODO: test
   def draw_from_deck
     if deck.empty?
       deck.cards = pile.cards
+      deck.shuffle
       pile.cards = []
     end
-    deck.shuffle
     deck.draw
   end
 

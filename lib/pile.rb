@@ -2,7 +2,8 @@
 
 # Class for the discard pile
 class Pile
-  attr_reader :cards, :can_draw_top_card
+  attr_reader :can_draw_top_card
+  attr_accessor :cards
 
   def initialize
     @cards = []
