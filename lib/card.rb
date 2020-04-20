@@ -57,6 +57,10 @@ class Card # rubocop:disable Metrics/ClassLength
     VALUES.values
   end
 
+  def self.possible_ranks
+    Card.values + Card.special
+  end
+
   def self.render_cards(cards)
     puts cards.map.with_index { |card, idx| "(#{idx}) #{card.display_name}" }
               .join(', ')
@@ -119,21 +123,16 @@ class Card # rubocop:disable Metrics/ClassLength
     rank > 7 ? 10 : 5
   end
 
-  # TODO: maybe a class method
-  def possible_ranks
-    Card.values + Card.special
-  end
-
   # Actual rank of card
   def rank(current_value = value)
-    value_idx = possible_ranks.index(current_value)
+    value_idx = Card.possible_ranks.index(current_value)
     ranks[value_idx]
   end
 
   # Possible ranks of all cards
   # TODO: maybe a class method
   def ranks
-    (1..possible_ranks.length).to_a
+    (1..Card.possible_ranks.length).to_a
   end
 
   # Will be replaced by client code
