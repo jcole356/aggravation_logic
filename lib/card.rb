@@ -88,6 +88,14 @@ class Card # rubocop:disable Metrics/ClassLength
     all_cards
   end
 
+  def current_suit
+    suit
+  end
+
+  def current_value
+    value
+  end
+
   def display_name
     "#{value}#{suit}"
   end
@@ -129,27 +137,16 @@ class Card # rubocop:disable Metrics/ClassLength
     ranks[value_idx]
   end
 
-  # Possible ranks of all cards
-  # TODO: maybe a class method
   def ranks
     (1..Card.possible_ranks.length).to_a
   end
 
-  # Will be replaced by client code
   def render
     puts display_name
   end
 
   def same_suit?(card)
     current_suit == card.current_suit
-  end
-
-  def current_suit
-    suit
-  end
-
-  def current_value
-    value
   end
 
   def wild?
