@@ -27,7 +27,9 @@ RSpec.describe 'Game#deal' do
     game.deal
 
     expect(game.players.length).to eq(3)
-    expect(game.players.first.hand.cards.length).to eq(11)
+    game.players.each do |player|
+      expect(player.hand.cards.length).to eq(11)
+    end
   end
 end
 
