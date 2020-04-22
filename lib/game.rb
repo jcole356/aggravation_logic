@@ -46,7 +46,7 @@ class Game
 
   def number_of_players
     invalid = false
-    num_players = nil
+    num_players = 0
     until valid_number_of_players(num_players)
       invalid_selection_response if invalid
       num_players = number_of_players_prompt
@@ -72,6 +72,11 @@ class Game
     loop do
       players.each(&:take_turn)
     end
+  end
+
+  def render
+    render_hands
+    render_pile
   end
 
   def render_hands

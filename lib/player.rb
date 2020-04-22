@@ -185,8 +185,7 @@ class Player
   def take_turn
     puts "#{name}'s turn"
     render_hand
-    game.render_hands
-    game.render_pile
+    game.render
     draw
     hand.render
     play_or_discard
