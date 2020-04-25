@@ -83,7 +83,7 @@ class Game
     players.each_with_index do |player, idx|
       puts "(#{idx}) #{player.name}'s cards"
       PlayerHand.render(player.current_hand)
-      player.hand.render_piles
+      player.render_piles
       puts ''
     end
   end

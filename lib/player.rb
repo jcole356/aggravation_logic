@@ -139,6 +139,10 @@ class Player
     hand.render
   end
 
+  def render_piles
+    hand.render_piles
+  end
+
   # TODO: Need to handle undo
   # @coord: [player, pile, index]
   def swap
